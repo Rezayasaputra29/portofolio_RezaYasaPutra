@@ -2,6 +2,7 @@ import SplashScreen from "../src/components/SplashScreen";
 import Navbar from "../src/components/navbar";
 import HeroSection from "../src/components/HeroSection";
 import AboutSection from "../src/components/AboutSection";
+import PortfolioSection from "../src/components/PortfolioSection";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
         {/* Di sinilah HeroSection dipanggil untuk menggantikan teks statis sebelumnya */}
         <HeroSection />
         <AboutSection />
+        <PortfolioSection />
       </main>
     </>
   );

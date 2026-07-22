@@ -8,10 +8,18 @@ export default function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 3000);
-    return () => clearTimeout(timer);
+    // Mengecek apakah user sudah pernah melihat splash screen di sesi ini
+    const hasSeenSplash = sessionStorage.getItem("splashSeen");
+
+    if (hasSeenSplash) {
+      setIsVisible(false); // Jika sudah, langsung hilangkan
+    } else {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        sessionStorage.setItem("splashSeen", "true"); // Simpan ke memori browser
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
@@ -23,7 +31,7 @@ export default function SplashScreen() {
           transition={{ duration: 0.8, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#020617]" // Warna latar Slate super gelap
         >
-          <motion.div 
+          <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
@@ -40,7 +48,7 @@ export default function SplashScreen() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
