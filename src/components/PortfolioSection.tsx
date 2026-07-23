@@ -186,8 +186,25 @@ export default function PortfolioSection() {
                     className="group flex flex-col justify-between bg-[#0f172a] border border-white/10 rounded-2xl overflow-hidden hover:border-cyan-500/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(34,211,238,0.15)]"
                   >
                     <div>
-                      <div className="h-48 bg-[#020617] border-b border-white/10 relative overflow-hidden flex items-center justify-center">
-                        <Cpu className="text-cyan-500 w-16 h-16 opacity-50 group-hover:scale-125 transition-transform duration-500" />
+                      {/* BAGIAN ATAS KARTU: Gambar Thumbnail */}
+                      <div className="h-48 sm:h-56 bg-[#0a0f1c] border-b border-white/10 relative overflow-hidden flex items-center justify-center group-hover:border-cyan-500/30 transition-colors">
+                        {/* Efek gradasi gelap di bagian bawah gambar agar menyatu dengan teks */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent opacity-90 z-10"></div>
+
+                        {/* Efek overlay warna saat di-hover */}
+                        <div className="absolute inset-0 bg-cyan-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
+
+                        {/* Memanggil gambar dari projectsData */}
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out relative z-0"
+                          onError={(e) => {
+                            // Jika gambar gagal dimuat, tampilkan placeholder
+                            e.currentTarget.src =
+                              "https://via.placeholder.com/600x400/0f172a/22d3ee?text=Image+Not+Found";
+                          }}
+                        />
                       </div>
                       <div className="p-6 pb-2">
                         <span className="text-[10px] uppercase tracking-widest text-emerald-400 font-semibold">
