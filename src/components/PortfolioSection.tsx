@@ -39,11 +39,13 @@ import {
   FaGlobe,
   FaFileExcel,
 } from "react-icons/fa";
-
+// Sesuaikan path-nya jika perlu, misal "../context/LanguageContext"
+// [PERBAIKAN]: Ganti "@/" menjadi "../"
+import { useLanguage } from "../context/LanguageContext";
 export default function PortfolioSection() {
   const [activeTab, setActiveTab] = useState("projects");
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
-
+  const { language } = useLanguage();
   const tabs = [
     { id: "projects", label: "Projects", icon: LayoutGrid },
     { id: "certificates", label: "Certificates", icon: Award },
@@ -142,9 +144,9 @@ export default function PortfolioSection() {
       >
         <div className="text-center max-w-2xl mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Portfolio{" "}
+            {language === "en" ? "Portfolio " : "Etalase "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
-              Showcase.
+              {language === "en" ? "Showcase." : "Portofolio."}
             </span>
           </h2>
         </div>
@@ -197,7 +199,7 @@ export default function PortfolioSection() {
                         {/* Memanggil gambar dari projectsData */}
                         <img
                           src={project.image}
-                          alt={project.title}
+                          alt={project.title[language]}
                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out relative z-0"
                           onError={(e) => {
                             // Jika gambar gagal dimuat, tampilkan placeholder
@@ -211,10 +213,10 @@ export default function PortfolioSection() {
                           {project.category}
                         </span>
                         <h3 className="text-xl font-bold text-white mt-1 mb-2 leading-snug">
-                          {project.title}
+                          {project.title[language]}
                         </h3>
                         <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                          {project.shortDesc}
+                          {project.shortDesc[language]}
                         </p>
                       </div>
                     </div>
@@ -303,23 +305,54 @@ export default function PortfolioSection() {
                     className={`flex flex-col gap-12 lg:gap-20 items-center ${index % 2 !== 0 ? "lg:flex-row-reverse" : "lg:flex-row"}`}
                   >
                     {/* BAGIAN TEKS (Narrative & Metrics) */}
+                    {/* BAGIAN TEKS (Narrative & Metrics) */}
                     <div className="w-full lg:w-1/2 flex flex-col">
-                      <div className="flex items-center gap-3 mb-4">
+                      <div className="flex flex-wrap items-center gap-3 mb-4">
+                        {/* Badge Periode */}
                         <span className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full text-xs font-mono tracking-widest uppercase">
-                          {exp.period}
+                          {exp.period[language]}
                         </span>
+
+                        {/* [+] Tombol Deploy (Hanya muncul jika deployLink ada datanya) */}
+                        {exp.deployLink && (
+                          <a
+                            href={exp.deployLink}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-4 py-1 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 hover:text-white rounded-full text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer group/link"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="14"
+                              height="14"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className="group-hover/link:scale-110 transition-transform"
+                            >
+                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                              <polyline points="15 3 21 3 21 9"></polyline>
+                              <line x1="10" y1="14" x2="21" y2="3"></line>
+                            </svg>
+                            Live Deploy
+                          </a>
+                        )}
                       </div>
+
                       <h3 className="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">
-                        {exp.role}
+                        {exp.role[language]}
                       </h3>
                       <h4 className="text-xl text-cyan-400 font-medium mb-6">
                         @ {exp.company}
                       </h4>
                       <p className="text-gray-400 text-lg leading-relaxed mb-8">
-                        {exp.description}
+                        {exp.description[language]}
                       </p>
                       <ul className="space-y-4">
-                        {exp.highlights.map((highlight, idx) => (
+                        {exp.highlights[language].map((highlight, idx) => (
                           <li
                             key={idx}
                             className="flex items-start gap-4 text-gray-300"
@@ -392,8 +425,9 @@ export default function PortfolioSection() {
               >
                 <div className="text-center mb-4">
                   <p className="text-gray-400 text-lg">
-                    Technologies and tools I frequently use to build data-driven
-                    solutions and modern applications.
+                    {language === "en"
+                      ? "Technologies and tools I frequently use to build data-driven solutions and modern applications."
+                      : "Teknologi dan alat yang sering saya gunakan untuk membangun solusi berbasis data dan aplikasi modern."}
                   </p>
                 </div>
 

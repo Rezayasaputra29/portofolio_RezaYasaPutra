@@ -3,12 +3,13 @@ import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send, Terminal, Loader2, CheckCircle2 } from "lucide-react";
 import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
-
+import { useLanguage } from "../context/LanguageContext";
 // Pastikan import ini sesuai dengan lokasi file supabase.ts milikmu
 import { supabase } from "../lib/supabase";
 
 export default function ContactSection() {
   const [isHovered, setIsHovered] = useState(false);
+  const { language } = useLanguage(); // 1. Panggil hook bahasa
   
   // State untuk menampung ketikan user
   const [formData, setFormData] = useState({
@@ -71,10 +72,15 @@ export default function ContactSection() {
       >
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">Connect.</span>
+            {language === "en" ? "Let's " : "Mari "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400">
+              {language === "en" ? "Connect." : "Terhubung."}
+            </span>
           </h2>
           <p className="text-gray-400 text-lg">
-            Currently open for new opportunities. Whether you have a question, a project idea, or just want to say hi, I'll try my best to get back to you!
+            {language === "en"
+              ? "Currently open for new opportunities. Whether you have a question, a project idea, or just want to say hi, I'll try my best to get back to you!"
+              : "Saat ini terbuka untuk peluang baru. Baik Anda memiliki pertanyaan, ide proyek, atau hanya ingin menyapa, saya akan berusaha sebaik mungkin untuk membalasnya!"}
           </p>
         </div>
 
@@ -98,7 +104,14 @@ export default function ContactSection() {
 
               <motion.div whileHover={{ x: 10 }} className="flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-purple-900/20 hover:border-purple-500/50 transition-all group cursor-default">
                 <div className="p-4 bg-[#0f172a] rounded-xl text-purple-400 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(168,85,247,0.1)] group-hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]"><MapPin size={24} /></div>
-                <div><p className="text-sm text-gray-400 mb-1 uppercase tracking-wider font-medium">Location</p><h4 className="text-white font-semibold md:text-lg">Padang, Indonesia</h4></div>
+                <div>
+                  <p className="text-sm text-gray-400 mb-1 uppercase tracking-wider font-medium">
+                    {language === "en" ? "Location" : "Lokasi"}
+                  </p>
+                  <h4 className="text-white font-semibold md:text-lg">
+                    {language === "en" ? "Padang, Indonesia" : "Padang, Indonesia"}
+                  </h4>
+                </div>
               </motion.div>
             </div>
 
@@ -124,28 +137,38 @@ export default function ContactSection() {
             >
               <div className="flex items-center gap-3 mb-2">
                 <Terminal size={20} className="text-cyan-400" />
-                <h3 className="text-xl font-bold text-white tracking-widest uppercase text-sm">Send a Message</h3>
+                <h3 className="text-xl font-bold text-white tracking-widest uppercase text-sm">
+                  {language === "en" ? "Send a Message" : "Kirim Pesan"}
+                </h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="text-sm font-medium text-gray-400 ml-1">Your Name</label>
-                  <input required type="text" id="name" value={formData.name} onChange={handleChange} placeholder="John Doe" className="w-full bg-[#020617] text-white border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder:text-gray-700" />
+                  <label htmlFor="name" className="text-sm font-medium text-gray-400 ml-1">
+                    {language === "en" ? "Your Name" : "Nama Anda"}
+                  </label>
+                  <input required type="text" id="name" value={formData.name} onChange={handleChange} placeholder={language === "en" ? "John Doe" : "Nama Lengkap"} className="w-full bg-[#020617] text-white border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder:text-gray-700" />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="email" className="text-sm font-medium text-gray-400 ml-1">Your Email</label>
+                  <label htmlFor="email" className="text-sm font-medium text-gray-400 ml-1">
+                    {language === "en" ? "Your Email" : "Email Anda"}
+                  </label>
                   <input required type="email" id="email" value={formData.email} onChange={handleChange} placeholder="john@company.com" className="w-full bg-[#020617] text-white border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder:text-gray-700" />
                 </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="subject" className="text-sm font-medium text-gray-400 ml-1">Subject</label>
-                <input required type="text" id="subject" value={formData.subject} onChange={handleChange} placeholder="Hiring / Project Discussion" className="w-full bg-[#020617] text-white border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder:text-gray-700" />
+                <label htmlFor="subject" className="text-sm font-medium text-gray-400 ml-1">
+                  {language === "en" ? "Subject" : "Subjek"}
+                </label>
+                <input required type="text" id="subject" value={formData.subject} onChange={handleChange} placeholder={language === "en" ? "Hiring / Project Discussion" : "Rekrutmen / Diskusi Proyek"} className="w-full bg-[#020617] text-white border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all placeholder:text-gray-700" />
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="message" className="text-sm font-medium text-gray-400 ml-1">Message</label>
-                <textarea required id="message" value={formData.message} onChange={handleChange} rows={5} placeholder="Hello, I'd like to talk about..." className="w-full bg-[#020617] text-white border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-gray-700 resize-none custom-scrollbar"></textarea>
+                <label htmlFor="message" className="text-sm font-medium text-gray-400 ml-1">
+                  {language === "en" ? "Message" : "Pesan"}
+                </label>
+                <textarea required id="message" value={formData.message} onChange={handleChange} rows={5} placeholder={language === "en" ? "Hello, I'd like to talk about..." : "Halo, saya ingin membicarakan tentang..."} className="w-full bg-[#020617] text-white border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder:text-gray-700 resize-none custom-scrollbar"></textarea>
               </div>
 
               <button 
@@ -160,16 +183,25 @@ export default function ContactSection() {
                   } disabled:opacity-80 disabled:cursor-not-allowed`}
               >
                 {status === "idle" && (
-                  <><span>Send Message</span> <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></>
+                  <>
+                    <span>{language === "en" ? "Send Message" : "Kirim Pesan"}</span> 
+                    <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </>
                 )}
                 {status === "loading" && (
-                  <><span>Sending...</span> <Loader2 size={18} className="animate-spin" /></>
+                  <>
+                    <span>{language === "en" ? "Sending..." : "Mengirim..."}</span> 
+                    <Loader2 size={18} className="animate-spin" />
+                  </>
                 )}
                 {status === "success" && (
-                  <><span>Message Sent!</span> <CheckCircle2 size={18} /></>
+                  <>
+                    <span>{language === "en" ? "Message Sent!" : "Pesan Terkirim!"}</span> 
+                    <CheckCircle2 size={18} />
+                  </>
                 )}
                 {status === "error" && (
-                  <span>Failed. Try Again!</span>
+                  <span>{language === "en" ? "Failed. Try Again!" : "Gagal. Coba Lagi!"}</span>
                 )}
               </button>
               

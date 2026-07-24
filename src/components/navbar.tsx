@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Code2, Terminal } from "lucide-react";
+import LanguageToggle from "./LanguageToggle"; // Sesuaikan jika jalurnya berbeda
 
 export default function Navbar() {
   return (
@@ -18,10 +19,15 @@ export default function Navbar() {
         <Link href="#contact" className="hover:text-cyan-400 transition-colors duration-300">Contact</Link>
       </div>
 
-      {/* Ikon Kanan */}
-      <div className="flex gap-4 text-gray-400">
-        <Code2 size={20} className="hover:text-emerald-400 cursor-pointer transition-colors" />
-        <Terminal size={20} className="hover:text-cyan-400 cursor-pointer transition-colors" />
+      {/* Ikon Kanan & Tombol Bahasa */}
+      <div className="flex items-center gap-5 text-gray-400">
+        <div className="hidden sm:flex items-center gap-4">
+          <Code2 size={20} className="hover:text-emerald-400 cursor-pointer transition-colors" />
+          <Terminal size={20} className="hover:text-cyan-400 cursor-pointer transition-colors" />
+        </div>
+        
+        {/* Tombol Ganti Bahasa Dipasang di Sini */}
+        <LanguageToggle />
       </div>
     </nav>
   );

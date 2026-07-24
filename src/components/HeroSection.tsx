@@ -1,16 +1,21 @@
 "use client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-// [+] Import ikon UI standar tetap dari lucide-react
+// [+] Import ikon UI standar
 import { ArrowUpRight, Database, Cpu } from "lucide-react"; 
-// [+] Import logo media sosial dari react-icons
+// [+] Import logo media sosial
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
+// [+] Import hook bahasa
+import { useLanguage } from "../context/LanguageContext";
 
-// Komponen Kecil untuk Efek Typewriter
-const Typewriter = ({ text }: { text: string }) => {
+// Komponen Kecil untuk Efek Typewriter Dwibahasa
+const Typewriter = ({ textEN, textID, language }: { textEN: string; textID: string; language: "en" | "id" }) => {
+  const text = language === "en" ? textEN : textID;
   const [displayText, setDisplayText] = useState("");
 
+  // Reset teks saat bahasa berubah
   useEffect(() => {
+    setDisplayText("");
     let i = 0;
     const timer = setInterval(() => {
       if (i < text.length) {
@@ -21,12 +26,21 @@ const Typewriter = ({ text }: { text: string }) => {
       }
     }, 40); // Kecepatan ketikan
     return () => clearInterval(timer);
-  }, [text]);
+  }, [text, language]);
 
-  return <span>{displayText}<motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }}>|</motion.span></span>;
+  return (
+    <span>
+      {displayText}
+      <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }}>
+        |
+      </motion.span>
+    </span>
+  );
 };
 
 export default function HeroSection() {
+  const { language } = useLanguage();
+
   return (
     <section id="home" className="relative w-full min-h-screen flex items-center justify-center bg-[#020617] px-8 pt-20">
       
@@ -40,20 +54,24 @@ export default function HeroSection() {
           className="flex flex-col items-start text-left"
         >
           <p className="text-cyan-400 font-mono tracking-widest text-sm mb-4 uppercase">
-            Hello, I am
+            {language === "en" ? "Hello, I am" : "Halo, Saya"}
           </p>
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tighter leading-tight">
             Reza Yasa Putra, S.Kom <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-4xl md:text-5xl">
-              Data Scientist & AI Engineer.
+              {language === "en" ? "Data Scientist & AI Engineer." : "Data Scientist & AI Engineer."}
             </span>
           </h1>
           
           <div className="text-gray-400 text-lg max-w-lg mb-6 min-h-[80px]">
-            <Typewriter text="Building Convolutional Neural Network architectures, intelligent classification systems, and designing data-driven solutions for complex problems." />
+            <Typewriter 
+              textEN="Building Convolutional Neural Network architectures, intelligent classification systems, and designing data-driven solutions for complex problems." 
+              textID="Membangun arsitektur Convolutional Neural Network, sistem klasifikasi cerdas, dan merancang solusi berbasis data untuk berbagai masalah kompleks."
+              language={language}
+            />
           </div>
 
-          {/* [+] Baris Ikon Media Sosial dengan Tautan Aktif */}
+          {/* Baris Ikon Media Sosial dengan Tautan Aktif */}
           <div className="flex gap-4 mb-8">
             <a 
               href="https://www.linkedin.com/in/rezayasa-putra" 
@@ -82,12 +100,12 @@ export default function HeroSection() {
           </div>
 
           <div className="flex gap-4">
-            <button className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-[#020617] px-6 py-3 rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)]">
-              View Projects <ArrowUpRight size={20} />
-            </button>
-            <button className="px-6 py-3 rounded-full border border-gray-600 text-gray-300 hover:border-cyan-400 hover:text-cyan-400 transition-colors">
-              Contact Me
-            </button>
+            <a href="#portfolio" className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-[#020617] px-6 py-3 rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)]">
+              {language === "en" ? "View Projects" : "Lihat Proyek"} <ArrowUpRight size={20} />
+            </a>
+            <a href="#contact" className="px-6 py-3 rounded-full border border-gray-600 text-gray-300 hover:border-cyan-400 hover:text-cyan-400 transition-colors flex items-center">
+              {language === "en" ? "Contact Me" : "Hubungi Saya"}
+            </a>
           </div>
         </motion.div>
 
@@ -113,7 +131,9 @@ export default function HeroSection() {
 
             <div className="absolute bottom-4 w-full text-center z-20">
               <h3 className="text-white font-bold text-lg tracking-widest">REZA YASA PUTRA</h3>
-              <p className="text-cyan-400 text-xs font-mono mt-1">Ready For Impact_</p>
+              <p className="text-cyan-400 text-xs font-mono mt-1">
+                {language === "en" ? "Ready For Impact_" : "Siap Berdampak_"}
+              </p>
             </div>
           </motion.div>
 
