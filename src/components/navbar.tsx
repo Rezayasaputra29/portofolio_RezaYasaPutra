@@ -8,7 +8,7 @@ export default function Navbar() {
     <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-8 py-6 bg-[#020617]/80 backdrop-blur-md border-b border-cyan-900/30">
       {/* Logo */}
       <div className="text-white font-black text-xl tracking-widest flex items-center gap-2">
-        <span className="text-cyan-400">AI</span>_ENGINEER
+        <span className="text-cyan-400">MY</span>PORTFOLIO WEBSITE
       </div>
       
       {/* Menu Navigasi Utama */}
@@ -22,8 +22,7 @@ export default function Navbar() {
       {/* Ikon Kanan & Tombol Bahasa */}
       <div className="flex items-center gap-5 text-gray-400">
         <div className="hidden sm:flex items-center gap-4">
-          <Code2 size={20} className="hover:text-emerald-400 cursor-pointer transition-colors" />
-          <Terminal size={20} className="hover:text-cyan-400 cursor-pointer transition-colors" />
+          
         </div>
         
         {/* Tombol Ganti Bahasa Dipasang di Sini */}
