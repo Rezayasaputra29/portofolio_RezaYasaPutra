@@ -16,7 +16,7 @@ export default function AboutSection() {
   const stats = [
     { icon: GraduationCap, value: "3.76", label: { en: "Cum Laude GPA", valueID: "IPK Cum Laude" } },
     { icon: FolderGit2, value: "10+", label: { en: "Completed Projects", valueID: "Proyek Selesai" } },
-    { icon: Award, value: "03+", label: { en: "Certifications", valueID: "Sertifikasi" } },
+    { icon: Award, value: "010+", label: { en: "Certifications", valueID: "Sertifikasi" } },
   ];
 
   return (
