@@ -22,7 +22,6 @@ export default function Navbar() {
       {/* Ikon Kanan & Tombol Bahasa */}
       <div className="flex items-center gap-5 text-gray-400">
         <div className="hidden sm:flex items-center gap-4">
-          
         </div>
         
         {/* Tombol Ganti Bahasa Dipasang di Sini */}
