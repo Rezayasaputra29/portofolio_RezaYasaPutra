@@ -16,7 +16,7 @@ export interface Project {
   shortDesc: { en: string; id: string };
   category: string;
   github: string;
-  demoType: "live" | "video" | "colab" | "none";
+  demoType: "live" | "video" | "colab" | "excel" | "none"; // <-- Tambahkan "excel" di sini
   demoLink: string;
   image: string;
   metrics: Metric[];
@@ -26,7 +26,6 @@ export interface Project {
   visualizations: Visualization[];
   keyFeatures: { en: string[]; id: string[] };
 }
-
 export const projectsData: Project[] = [
   {
     id: 1,
@@ -450,5 +449,81 @@ export const projectsData: Project[] = [
         "Merumuskan rekomendasi strategis untuk peningkatan model di masa depan, termasuk k-fold cross-validation dan pengujian pada dataset eksternal."
       ]
     },
-  }
+  },
+  {
+    id: 7,
+    title: {
+      en: "E-Commerce Interactive Excel Dashboard",
+      id: "Dashboard Interaktif Excel E-Commerce",
+    },
+    shortDesc: {
+      en: "A dynamic and fully automated Microsoft Excel dashboard designed to track key business metrics like net sales, product volume, and customer ratings.",
+      id: "Dashboard Microsoft Excel yang dinamis dan sepenuhnya otomatis, dirancang untuk melacak metrik bisnis utama seperti penjualan bersih, volume produk, dan rating pelanggan.",
+    },
+    category: "Data Analysis & Business Intelligence",
+    github: "", // Ganti dengan link repo jika ada
+    demoType: "excel", // Sangat disarankan pakai video untuk demo Excel
+    demoLink: "/Case Study-Dashboard.xlsx", // Ganti dengan link video YouTube/Drive
+    image: "/dasb1.png", // Pastikan file gambar ada di folder public/
+    metrics: [
+      {
+        label: { en: "Total Net Sales", id: "Total Penjualan Bersih" },
+        value: "Rp 7.09B",
+      },
+      {
+        label: { en: "Units Sold", id: "Unit Terjual" },
+        value: "26,453",
+      },
+      {
+        label: { en: "Processed Records", id: "Data Pesanan" },
+        value: "15,000",
+      },
+    ],
+    problem: {
+      en: "Stakeholders often struggle to make quick, data-driven decisions because raw sales data is scattered, complex, and requires tedious manual recalculation every time new records are added.",
+      id: "Pemangku kepentingan sering kesulitan mengambil keputusan cepat berbasis data karena data penjualan mentah yang tersebar, rumit, dan memerlukan perhitungan ulang manual yang melelahkan setiap kali ada data baru.",
+    },
+    solution: {
+      en: "Engineered a consolidated, automated Excel dashboard using Pivot Tables, Connected Slicers, and dynamic charts. Connected directly to the raw dataset, the dashboard instantly updates all Key Performance Indicators (KPIs) upon data modification.",
+      id: "Merancang dashboard Excel yang terpadu dan otomatis menggunakan Pivot Table, Connected Slicer, dan grafik dinamis. Terhubung langsung ke dataset mentah, dashboard ini langsung memperbarui semua Key Performance Indicators (KPI) saat data diubah.",
+    },
+    techStack: [
+      "Microsoft Excel",
+      "Pivot Tables",
+      "Pivot Charts",
+      "Data Modeling",
+      "Connected Slicers",
+    ],
+    visualizations: [
+      {
+        label: {
+          en: "Dynamic Dashboard Interface with Interactive Slicers",
+          id: "Antarmuka Dashboard Dinamis dengan Slicer Interaktif",
+        },
+        url: "/dasb1.png", // Gunakan screenshot dashboard utamamu
+      },
+      {
+        label: {
+          en: "Automated KPI Engine Aggregation",
+          id: "Agregasi KPI Otomatis",
+        },
+        url: "/kpi.png", // Opsional: screenshot dari sheet 'Pivot_KPI'
+      },
+    ],
+    keyFeatures: {
+      en: [
+        "Processed and aggregated 15,000 fashion retail order records spanning various cities, platforms, and payment methods.",
+        "Engineered dynamic Pivot Tables and connected Slicers for seamless, one-click data filtering.",
+        "Visualized critical business metrics including Total Net Sales (Rp 7 Billion+), Sold Quantity (26,453), and Customer Satisfaction (2.97 Avg).",
+        "Built an automated data architecture where all charts and KPIs refresh instantly simply by adding new data to the raw sheet.",
+      ],
+      id: [
+        "Memproses dan mengagregasi 15.000 data pesanan ritel pakaian yang tersebar di berbagai kota, platform, dan metode pembayaran.",
+        "Membangun Pivot Table dinamis dan menghubungkannya dengan Slicer untuk pemfilteran data satu klik yang intuitif.",
+        "Memvisualisasikan metrik bisnis kritis termasuk Total Penjualan Bersih (Rp 7 Miliar+), Kuantitas Terjual (26.453), dan Kepuasan Pelanggan (Rata-rata 2.97).",
+        "Membangun arsitektur data otomatis di mana semua grafik dan KPI diperbarui seketika hanya dengan menambahkan data baru ke sheet mentah.",
+      ],
+    },
+  },
 ];
+

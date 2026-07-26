@@ -135,8 +135,9 @@ export const experiencesData: Experience[] = [
       ]
     },
     image1: "/bcsb.png",
-    image2: "/exp-bcsb-2.jpg",
-    image3: "/exp-bcsb-3.jpg",
+    image2: "/bcsb3.png",
+    image3: "/bcsb2.png",
     deployLink: "https://bordercrossingspaceburneh.com/",
   }
+  
 ];
