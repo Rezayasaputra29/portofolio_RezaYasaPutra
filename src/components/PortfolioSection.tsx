@@ -10,6 +10,7 @@ import {
   ExternalLink,
   PlayCircle,
   FileCode2,
+  Download,
 } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
@@ -124,6 +125,18 @@ export default function PortfolioSection() {
           <FileCode2 size={18} />
         </a>
       );
+    if (type === "excel" || type === "pdf")
+      return (
+        <a
+          href={link}
+          download
+          target="_blank"
+          rel="noreferrer"
+          className="p-2 bg-white/5 hover:bg-blue-500/20 text-gray-400 hover:text-blue-400 rounded-full border border-transparent hover:border-blue-500/30"
+        >
+          <Download size={18} />
+        </a>
+      );
     return null;
   };
 
@@ -222,14 +235,18 @@ export default function PortfolioSection() {
                     </div>
                     <div className="px-6 pb-6 pt-2 flex items-center justify-between border-t border-white/5 mt-auto">
                       <div className="flex gap-3">
-                        <a
-                          href={project.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="p-2 bg-white/5 hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 rounded-full border border-transparent hover:border-cyan-500/30"
-                        >
-                          <FaGithub size={18} />
-                        </a>
+                        {/* [+] BUNGKUS DENGAN SYARAT project.github !== "" */}
+                        {project.github !== "" && (
+                          <a
+                            href={project.github}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="p-2 bg-white/5 hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 rounded-full border border-transparent hover:border-cyan-500/30"
+                          >
+                            <FaGithub size={18} />
+                          </a>
+                        )}
+
                         {renderDemoButton(project.demoType, project.demoLink)}
                       </div>
                       <Link

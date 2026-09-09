@@ -8,6 +8,7 @@ export interface Metric {
 export interface Visualization {
   label: { en: string; id: string };
   url: string;
+  description?: { en: string; id: string };
 }
 
 export interface Project {
@@ -16,8 +17,9 @@ export interface Project {
   shortDesc: { en: string; id: string };
   category: string;
   github: string;
-  demoType: "live" | "video" | "colab" | "excel" | "none"; // <-- Tambahkan "excel" di sini
+  demoType: "live" | "video" | "colab" | "excel" |"pdf" | "none"; // <-- Tambahkan "excel" dan "pdf" di sini
   demoLink: string;
+  datasetLink?: string;
   image: string;
   metrics: Metric[];
   problem: { en: string; id: string };
@@ -326,7 +328,8 @@ export const projectsData: Project[] = [
     category: "Machine Learning / Natural Language Processing",
     github: "https://github.com/Rezayasaputra29/Projec_Analisis_Sentimen",
     demoType: "colab", // Tipe demo sesuai interfacemu
-    demoLink: "https://colab.research.google.com/drive/1pTsmL_2xPDPBLkxsBCJe2aN8TqbVHrkG?usp=sharing",
+    demoLink:
+      "https://colab.research.google.com/drive/1pTsmL_2xPDPBLkxsBCJe2aN8TqbVHrkG?usp=sharing",
     image: "/pubg.png", // Ganti dengan nama file gambar cover yang disiapkan
     metrics: [
       {
@@ -392,11 +395,11 @@ export const projectsData: Project[] = [
     id: 6,
     title: {
       en: "Poverty Line Classification System",
-      id: "Sistem Klasifikasi Garis Kemiskinan"
+      id: "Sistem Klasifikasi Garis Kemiskinan",
     },
     shortDesc: {
       en: "A machine learning pipeline evaluating multiple algorithms (SVM, KNN, Decision Tree, Naive Bayes) to classify regional poverty lines, addressing data imbalance via SMOTE.",
-      id: "Pipeline machine learning yang mengevaluasi berbagai algoritma (SVM, KNN, Decision Tree, Naive Bayes) untuk klasifikasi garis kemiskinan, menangani ketidakseimbangan data via SMOTE."
+      id: "Pipeline machine learning yang mengevaluasi berbagai algoritma (SVM, KNN, Decision Tree, Naive Bayes) untuk klasifikasi garis kemiskinan, menangani ketidakseimbangan data via SMOTE.",
     },
     category: "Machine Learning / Classification",
     github: "https://github.com/Rezayasaputra29/Project_ML_Pemula",
@@ -404,32 +407,44 @@ export const projectsData: Project[] = [
     demoLink: "https://github.com/Rezayasaputra29/Project_ML_Pemula",
     image: "/cm_kemiskinan.png", // Siapkan gambar cover proyek di folder public
     metrics: [
-      { label: { en: "Test Accuracy", id: "Akurasi Pengujian" }, value: "1.00" },
+      {
+        label: { en: "Test Accuracy", id: "Akurasi Pengujian" },
+        value: "1.00",
+      },
       { label: { en: "F1-Score", id: "Skor F1" }, value: "1.00" },
-      { label: { en: "Train-Test Split", id: "Rasio Split Data" }, value: "20:80" },
+      {
+        label: { en: "Train-Test Split", id: "Rasio Split Data" },
+        value: "20:80",
+      },
     ],
     problem: {
       en: "Poverty line data often suffers from imbalanced classes and complex regional economic distributions. Classifying this data accurately requires robust preprocessing to prevent models from developing bias towards majority classes.",
-      id: "Data garis kemiskinan sering kali memiliki ketidakseimbangan kelas dan distribusi ekonomi daerah yang kompleks. Mengklasifikasikan data ini secara akurat membutuhkan pra-pemrosesan yang kuat untuk mencegah bias model terhadap kelas mayoritas."
+      id: "Data garis kemiskinan sering kali memiliki ketidakseimbangan kelas dan distribusi ekonomi daerah yang kompleks. Mengklasifikasikan data ini secara akurat membutuhkan pra-pemrosesan yang kuat untuk mencegah bias model terhadap kelas mayoritas.",
     },
     solution: {
       en: "Built a comprehensive Machine Learning pipeline involving MinMax Scaling and One-Hot Encoding. Addressed class imbalance by implementing SMOTE (Synthetic Minority Over-sampling Technique). Evaluated four classifiers, achieving perfect 1.0 metrics across the board due to highly informative dataset features.",
-      id: "Membangun pipeline Machine Learning komprehensif yang melibatkan MinMax Scaling dan One-Hot Encoding. Mengatasi ketidakseimbangan kelas dengan menerapkan SMOTE. Mengevaluasi empat pengklasifikasi, dan mencapai metrik 1.0 yang sempurna di semua model akibat fitur dataset yang sangat informatif."
+      id: "Membangun pipeline Machine Learning komprehensif yang melibatkan MinMax Scaling dan One-Hot Encoding. Mengatasi ketidakseimbangan kelas dengan menerapkan SMOTE. Mengevaluasi empat pengklasifikasi, dan mencapai metrik 1.0 yang sempurna di semua model akibat fitur dataset yang sangat informatif.",
     },
     techStack: [
       "Python",
       "Scikit-learn",
       "Imbalanced-learn",
       "Pandas",
-      "Seaborn"
+      "Seaborn",
     ],
     visualizations: [
       {
-        label: { en: "Perfect Confusion Matrices across 4 Models", id: "Confusion Matrix Sempurna pada 4 Model" },
+        label: {
+          en: "Perfect Confusion Matrices across 4 Models",
+          id: "Confusion Matrix Sempurna pada 4 Model",
+        },
         url: "/cm_kemiskinan.png", // Screenshot 4 Confusion Matrix yang kamu lampirkan
       },
       {
-        label: { en: "Outlier Detection & Data Distribution (Boxplot)", id: "Deteksi Outlier & Distribusi Data (Boxplot)" },
+        label: {
+          en: "Outlier Detection & Data Distribution (Boxplot)",
+          id: "Deteksi Outlier & Distribusi Data (Boxplot)",
+        },
         url: "/outlier.png", // Screenshot Boxplot Distribusi garis kemiskinan
       },
     ],
@@ -439,15 +454,15 @@ export const projectsData: Project[] = [
         "Handled class imbalance successfully by generating synthetic samples using SMOTE technique.",
         "Trained and compared four distinct ML algorithms: K-Nearest Neighbors, Decision Tree, Gaussian Naive Bayes, and SVM.",
         "Conducted critical post-evaluation analysis, recognizing the perfect 100% accuracy as a potential indicator of overfitting or highly deterministic data.",
-        "Formulated strategic recommendations for future improvements, including k-fold cross-validation and testing on external datasets."
+        "Formulated strategic recommendations for future improvements, including k-fold cross-validation and testing on external datasets.",
       ],
       id: [
         "Melakukan Exploratory Data Analysis (EDA) komprehensif termasuk Heatmap Korelasi dan Boxplot untuk mendeteksi outlier.",
         "Menangani ketidakseimbangan kelas secara sukses dengan menghasilkan sampel sintetis menggunakan teknik SMOTE.",
         "Melatih dan membandingkan empat algoritma ML berbeda: K-Nearest Neighbors, Decision Tree, Gaussian Naive Bayes, dan SVM.",
         "Melakukan analisis pasca-evaluasi yang kritis, mengenali akurasi 100% sempurna sebagai potensi indikator overfitting atau data yang sangat deterministik.",
-        "Merumuskan rekomendasi strategis untuk peningkatan model di masa depan, termasuk k-fold cross-validation dan pengujian pada dataset eksternal."
-      ]
+        "Merumuskan rekomendasi strategis untuk peningkatan model di masa depan, termasuk k-fold cross-validation dan pengujian pada dataset eksternal.",
+      ],
     },
   },
   {
@@ -525,5 +540,91 @@ export const projectsData: Project[] = [
       ],
     },
   },
-];
 
+  {
+    id: 8,
+    title: {
+      en: "Telco Revenue Protection Dashboard",
+      id: "Dashboard Telco Revenue Protection"
+    },
+    shortDesc: {
+      en: "A Power BI dashboard featuring an App-like UI and AI-driven Root Cause Analysis to quantify customer churn impact and identify revenue leakage triggers.",
+      id: "Dashboard Power BI dengan antarmuka bergaya aplikasi dan Root Cause Analysis berbasis AI untuk mengukur dampak churn pelanggan dan mengidentifikasi pemicu kebocoran pendapatan."
+    },
+    category: "Business Intelligence / Data Analysis",
+    github: "", 
+    demoType: "pdf", 
+    demoLink: "/dashboardchurn.pdf", 
+    datasetLink: "/telco_churn_cleaned.csv", 
+    image: "/churn.png", 
+    metrics: [
+      { label: { en: "Top Revenue Leakage", id: "Penyumbang Kerugian Terbesar" }, value: "Fiber Optic" },
+      { label: { en: "Critical Churn Period", id: "Masa Kritis Churn" }, value: "0-12 Months" },
+      { label: { en: "Retention Opportunity", id: "Peluang Retensi" }, value: "Security Bundling" },
+    ],
+    problem: {
+      en: "High customer churn directly impacts telecom revenue leakage. The challenge lies beyond merely counting lost users; it requires dissecting customer profiles, identifying exact churn triggers, and calculating the actual financial loss to prioritize retention strategies.",
+      id: "Tingkat churn pelanggan yang tinggi berdampak langsung pada kebocoran pendapatan perusahaan telekomunikasi. Tantangannya bukan sekadar menghitung pengguna yang hilang, tetapi membedah profil mereka, mengidentifikasi pemicu churn, dan menghitung kerugian finansial aktual untuk memprioritaskan strategi retensi."
+    },
+    solution: {
+      en: "Designed an end-to-end analytics architecture using Power BI with App-like navigation. Formulated Advanced DAX to quantify 'Revenue Lost' and deployed AI Decomposition Trees to drill down into loss contributors. Uncovered that Month-to-Month Fiber Optic users in their first 12 months are the biggest bleeding neck, enabling highly targeted retention campaigns.",
+      id: "Merancang arsitektur analitik end-to-end menggunakan Power BI dengan navigasi App-like. Memformulasikan Advanced DAX untuk menghitung 'Revenue Lost' (Pendapatan yang Hilang) dan menggunakan AI Decomposition Tree untuk melacak penyumbang kerugian. Menemukan bahwa pengguna layanan Fiber Optic dengan kontrak bulanan (Month-to-Month) di 12 bulan pertama adalah titik kerugian terbesar."
+    },
+    techStack: [
+      "Power BI Desktop",
+      "Power BI Service",
+      "DAX (Data Analysis Expressions)",
+      "Power Query",
+      "(AI Visuals)"
+    ],
+    visualizations: [
+      {
+        label: { 
+            en: "App-like Navigation & Executive Monitoring", 
+            id: "Navigasi App-like & Pemantauan Eksekutif" 
+        },
+        url: "/churn.png", 
+        description: {
+            en: "The dashboard is designed with an intuitive, multi-page 'App-like' interface (Monitoring, Customers, Analysis, Reports) using Action Buttons, entirely eliminating the need for vertical scrolling and providing a seamless executive experience.",
+            id: "Dashboard ini dirancang dengan antarmuka 'bergaya aplikasi' multi-halaman yang intuitif (Monitoring, Customers, Analysis, Reports) menggunakan Action Buttons, sehingga sepenuhnya menghilangkan kebutuhan untuk menggulir ke bawah (vertical scrolling) dan memberikan pengalaman penggunaan tingkat eksekutif."
+        }
+      },
+      {
+        label: { 
+            en: "AI-Powered Decomposition Tree Analysis: Identifying the 'Bleeding Neck'", 
+            id: "Analisis Root Cause Berbasis AI: Mengidentifikasi Titik Kerugian Utama" 
+        },
+        url: "/Analisischurn.png", 
+        description: {
+            en: "Utilized Power BI's built-in Machine Learning visual, the Decomposition Tree, to perform root cause analysis with a single click. The analysis reveals that 'Fiber Optic' services combined with 'Month-to-month' contracts account for a massive percentage of the revenue lost, identifying the crucial 'Bleeding Neck'.",
+            id: "Memanfaatkan visual Machine Learning bawaan Power BI, yaitu Decomposition Tree, untuk melakukan analisis akar penyebab (root cause analysis) hanya dengan satu klik. Analisis ini mengungkapkan bahwa layanan 'Fiber Optic' yang dikombinasikan dengan kontrak bulanan ('Month-to-month') menyumbang persentase kerugian pendapatan yang masif, mengidentifikasi titik kerugian utama perusahaan."
+        }
+      },
+      {
+        label: { 
+            en: "Churn Risk vs Tenure Analysis", 
+            id: "Analisis Risiko Churn vs Masa Berlangganan (Tenure)" 
+        },
+        url: "/customerchurn.png", // Ganti dengan screenshot chart tenure/umur berlangganan
+        description: {
+            en: "Trend analysis of customer tenure demonstrates that the risk of churn and financial leakage peaks during the critical first 0-12 months of subscription. Additionally, data shows a significant retention opportunity: offering 'Online Security' bundles in the first year drastically reduces churn.",
+            id: "Grafik tren korelasi umur berlangganan (Tenure) membuktikan bahwa risiko churn dan kebocoran dana memuncak pada periode kritis 0-12 bulan pertama pelanggan berlangganan. Data juga menunjukkan peluang retensi yang signifikan: memberikan insentif atau bundling 'Online Security' di tahun pertama terbukti secara data berpotensi besar menyelamatkan pendapatan."
+        }
+      }
+    ],
+    keyFeatures: {
+      en: [
+        "Built App-like UI/UX Navigation featuring a multi-page interface (Monitoring, Customers, Analysis, Reports) with intuitive Action Buttons, eliminating vertical scrolling.",
+        "Formulated Advanced DAX Measures to calculate direct financial loss (Revenue Lost) instead of standard headcount metrics.",
+        "Implemented built-in Machine Learning via Decomposition Tree to pinpoint the highest revenue loss contributors with a single click.",
+        "Created an Operational Export-Ready Reporting page integrated with Dynamic Text Summaries for seamless billing team handoffs."
+      ],
+      id: [
+        "Membangun navigasi App-like UI/UX dengan antarmuka multi-halaman (Monitoring, Customers, Analysis, Reports) menggunakan Action Button yang intuitif tanpa perlu scroll.",
+        "Merumuskan Advanced DAX Measure untuk menghitung kerugian finansial langsung (Revenue Lost), tidak sekadar metrik penghitungan jumlah orang standar.",
+        "Mengimplementasikan Machine Learning bawaan (Decomposition Tree) untuk melacak cabang penyumbang kerugian terbesar hanya dengan satu klik.",
+        "Membuat halaman Operational Export-Ready Reporting yang terintegrasi dengan Dynamic Text Summary untuk kemudahan ekspor oleh tim operasional/penagihan."
+      ]
+    },
+  }
+];
