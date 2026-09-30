@@ -8,7 +8,6 @@ import { useLanguage } from "../context/LanguageContext";
 import { supabase } from "../lib/supabase";
 
 export default function ContactSection() {
-  const [isHovered, setIsHovered] = useState(false);
   const { language } = useLanguage(); // 1. Panggil hook bahasa
   
   // State untuk menampung ketikan user
@@ -58,10 +57,6 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="relative w-full min-h-screen bg-[#020617] px-8 py-24 overflow-hidden flex flex-col items-center justify-center perspective-1000">
-      
-      {/* Background 3D Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse delay-700"></div>
 
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -93,17 +88,17 @@ export default function ContactSection() {
             
             <div className="flex flex-col gap-4">
               <motion.a href="mailto:prezayasa@gmail.com" whileHover={{ x: 10 }} className="flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-cyan-900/20 hover:border-cyan-500/50 transition-all group">
-                <div className="p-4 bg-[#0f172a] rounded-xl text-cyan-400 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(34,211,238,0.1)] group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]"><Mail size={24} /></div>
+                <div className="p-4 bg-[#0f172a] rounded-xl text-cyan-400 group-hover:scale-110 transition-transform"><Mail size={24} /></div>
                 <div><p className="text-sm text-gray-400 mb-1 uppercase tracking-wider font-medium">Email</p><h4 className="text-white font-semibold md:text-lg break-all">prezayasa@gmail.com</h4></div>
               </motion.a>
 
               <motion.a href="https://wa.me/6283178938753" target="_blank" rel="noreferrer" whileHover={{ x: 10 }} className="flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-emerald-900/20 hover:border-emerald-500/50 transition-all group">
-                <div className="p-4 bg-[#0f172a] rounded-xl text-emerald-400 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(52,211,153,0.1)] group-hover:shadow-[0_0_20px_rgba(52,211,153,0.4)]"><FaWhatsapp size={24} /></div>
+                <div className="p-4 bg-[#0f172a] rounded-xl text-emerald-400 group-hover:scale-110 transition-transform"><FaWhatsapp size={24} /></div>
                 <div><p className="text-sm text-gray-400 mb-1 uppercase tracking-wider font-medium">WhatsApp</p><h4 className="text-white font-semibold md:text-lg">+62 831-7893-8753</h4></div>
               </motion.a>
 
               <motion.div whileHover={{ x: 10 }} className="flex items-center gap-5 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-purple-900/20 hover:border-purple-500/50 transition-all group cursor-default">
-                <div className="p-4 bg-[#0f172a] rounded-xl text-purple-400 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(168,85,247,0.1)] group-hover:shadow-[0_0_20px_rgba(168,85,247,0.4)]"><MapPin size={24} /></div>
+                <div className="p-4 bg-[#0f172a] rounded-xl text-purple-400 group-hover:scale-110 transition-transform"><MapPin size={24} /></div>
                 <div>
                   <p className="text-sm text-gray-400 mb-1 uppercase tracking-wider font-medium">
                     {language === "en" ? "Location" : "Lokasi"}
@@ -116,8 +111,8 @@ export default function ContactSection() {
             </div>
 
             <div className="flex gap-4 pt-4 border-t border-white/10 mt-auto">
-              <a href="https://www.linkedin.com/in/rezayasa-putra/" target="_blank" rel="noreferrer" className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 hover:border-[#0A66C2] hover:bg-[#0A66C2]/10 text-gray-400 hover:text-[#0A66C2] hover:-translate-y-2 transition-all duration-300 shadow-lg" title="LinkedIn Profile"><FaLinkedin size={26} /></a>
-              <a href="https://github.com/Rezayasaputra29" target="_blank" rel="noreferrer" className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 hover:border-white/50 hover:bg-white/10 text-gray-400 hover:text-white hover:-translate-y-2 transition-all duration-300 shadow-lg" title="GitHub Repository"><FaGithub size={26} /></a>
+              <a href="https://www.linkedin.com/in/rezayasa-putra/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 hover:border-[#0A66C2] hover:bg-[#0A66C2]/10 text-gray-400 hover:text-[#0A66C2] transition-colors duration-300" title="LinkedIn Profile"><FaLinkedin size={26} /></a>
+              <a href="https://github.com/Rezayasaputra29" target="_blank" rel="noreferrer" aria-label="GitHub" className="flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 hover:border-white/50 hover:bg-white/10 text-gray-400 hover:text-white transition-colors duration-300" title="GitHub Repository"><FaGithub size={26} /></a>
             </div>
 
           </div>
@@ -125,15 +120,10 @@ export default function ContactSection() {
           {/* ========================================= */}
           {/* BAGIAN KANAN: Form 3D Glassmorphism       */}
           {/* ========================================= */}
-          <div className="w-full lg:w-7/12 relative perspective-1000 z-10">
-            
-            <div className={`absolute inset-0 bg-gradient-to-tr from-cyan-500/10 to-emerald-500/10 rounded-3xl blur-xl transition-opacity duration-500 pointer-events-none -z-10 ${isHovered ? 'opacity-100' : 'opacity-0'}`}></div>
-            
+          <div className="w-full lg:w-7/12 relative z-10">
             <form 
               onSubmit={handleSubmit}
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-              className="relative z-10 p-8 md:p-10 rounded-3xl bg-[#0a0f1c]/80 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-col gap-6 transition-all duration-500 hover:border-cyan-500/30 hover:translate-y-[-5px]"
+              className="relative z-10 p-8 md:p-10 rounded-2xl bg-[#0a0f1c]/80 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-col gap-6 transition-colors duration-500 hover:border-cyan-500/30"
             >
               <div className="flex items-center gap-3 mb-2">
                 <Terminal size={20} className="text-cyan-400" />
@@ -176,10 +166,10 @@ export default function ContactSection() {
                 disabled={status === "loading" || status === "success"}
                 className={`group w-full mt-4 font-bold py-4 px-8 rounded-xl transition-all flex items-center justify-center gap-3
                   ${status === "success" 
-                    ? "bg-emerald-600 text-white shadow-[0_0_20px_rgba(52,211,153,0.4)]" 
+                    ? "bg-emerald-600 text-white" 
                     : status === "error"
                     ? "bg-red-600 text-white"
-                    : "bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-white shadow-[0_0_20px_rgba(34,211,238,0.2)] hover:shadow-[0_0_30px_rgba(52,211,153,0.4)]"
+                    : "bg-gradient-to-r from-cyan-600 to-emerald-600 hover:from-cyan-500 hover:to-emerald-500 text-white"
                   } disabled:opacity-80 disabled:cursor-not-allowed`}
               >
                 {status === "idle" && (

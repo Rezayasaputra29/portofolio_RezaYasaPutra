@@ -48,10 +48,26 @@ export default function PortfolioSection() {
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
   const { language } = useLanguage();
   const tabs = [
-    { id: "projects", label: "Projects", icon: LayoutGrid },
-    { id: "certificates", label: "Certificates", icon: Award },
-    { id: "experience", label: "Experience", icon: Briefcase },
-    { id: "techstack", label: "Tech Stack", icon: Cpu },
+    {
+      id: "projects",
+      label: language === "en" ? "Projects" : "Proyek",
+      icon: LayoutGrid,
+    },
+    {
+      id: "certificates",
+      label: language === "en" ? "Certificates" : "Sertifikat",
+      icon: Award,
+    },
+    {
+      id: "experience",
+      label: language === "en" ? "Experience" : "Pengalaman",
+      icon: Briefcase,
+    },
+    {
+      id: "techstack",
+      label: language === "en" ? "Tech Stack" : "Teknologi",
+      icon: Cpu,
+    },
   ];
   // DATA KATEGORI TECH STACK
   const techCategories = [
@@ -92,12 +108,21 @@ export default function PortfolioSection() {
     },
   ];
   const renderDemoButton = (type: string, link: string) => {
+    const ariaLabel: Record<string, string> = {
+      live: language === "en" ? "Live demo" : "Demo langsung",
+      video: language === "en" ? "Video demo" : "Demo video",
+      colab: language === "en" ? "Open Colab notebook" : "Buka notebook Colab",
+      excel: language === "en" ? "Download Excel file" : "Unduh file Excel",
+      pdf: language === "en" ? "Download PDF report" : "Unduh laporan PDF",
+    };
     if (type === "live")
       return (
         <a
           href={link}
           target="_blank"
           rel="noreferrer"
+          aria-label={ariaLabel.live}
+          title={ariaLabel.live}
           className="p-2 bg-white/5 hover:bg-emerald-500/20 text-gray-400 hover:text-emerald-400 rounded-full border border-transparent hover:border-emerald-500/30"
         >
           <ExternalLink size={18} />
@@ -109,6 +134,8 @@ export default function PortfolioSection() {
           href={link}
           target="_blank"
           rel="noreferrer"
+          aria-label={ariaLabel.video}
+          title={ariaLabel.video}
           className="p-2 bg-white/5 hover:bg-purple-500/20 text-gray-400 hover:text-purple-400 rounded-full border border-transparent hover:border-purple-500/30"
         >
           <PlayCircle size={18} />
@@ -120,6 +147,8 @@ export default function PortfolioSection() {
           href={link}
           target="_blank"
           rel="noreferrer"
+          aria-label={ariaLabel.colab}
+          title={ariaLabel.colab}
           className="p-2 bg-white/5 hover:bg-yellow-500/20 text-gray-400 hover:text-yellow-400 rounded-full border border-transparent hover:border-yellow-500/30"
         >
           <FileCode2 size={18} />
@@ -132,6 +161,8 @@ export default function PortfolioSection() {
           download
           target="_blank"
           rel="noreferrer"
+          aria-label={type === "pdf" ? ariaLabel.pdf : ariaLabel.excel}
+          title={type === "pdf" ? ariaLabel.pdf : ariaLabel.excel}
           className="p-2 bg-white/5 hover:bg-blue-500/20 text-gray-400 hover:text-blue-400 rounded-full border border-transparent hover:border-blue-500/30"
         >
           <Download size={18} />
@@ -145,9 +176,6 @@ export default function PortfolioSection() {
       id="portfolio"
       className="relative w-full min-h-screen bg-[#020617] px-8 py-24 overflow-hidden flex flex-col items-center perspective-1000"
     >
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-600/20 rounded-full blur-[100px] animate-pulse pointer-events-none"></div>
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-600/20 rounded-full blur-[100px] animate-pulse delay-1000 pointer-events-none"></div>
-
       <motion.div
         initial={{ opacity: 0, rotateX: -30, y: 100 }}
         whileInView={{ opacity: 1, rotateX: 0, y: 0 }}
@@ -241,6 +269,16 @@ export default function PortfolioSection() {
                             href={project.github}
                             target="_blank"
                             rel="noreferrer"
+                            aria-label={
+                              language === "en"
+                                ? "View source code on GitHub"
+                                : "Lihat kode sumber di GitHub"
+                            }
+                            title={
+                              language === "en"
+                                ? "View source code on GitHub"
+                                : "Lihat kode sumber di GitHub"
+                            }
                             className="p-2 bg-white/5 hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 rounded-full border border-transparent hover:border-cyan-500/30"
                           >
                             <FaGithub size={18} />
@@ -253,7 +291,7 @@ export default function PortfolioSection() {
                         href={`/project/${project.id}`}
                         className="flex items-center gap-2 text-sm font-semibold text-cyan-400 hover:text-white transition-colors group/btn"
                       >
-                        Details{" "}
+                        {language === "en" ? "Details" : "Detail"}{" "}
                         <ArrowRight
                           size={16}
                           className="group-hover/btn:translate-x-1 transition-transform"
@@ -322,7 +360,6 @@ export default function PortfolioSection() {
                     className={`flex flex-col gap-12 lg:gap-20 items-center ${index % 2 !== 0 ? "lg:flex-row-reverse" : "lg:flex-row"}`}
                   >
                     {/* BAGIAN TEKS (Narrative & Metrics) */}
-                    {/* BAGIAN TEKS (Narrative & Metrics) */}
                     <div className="w-full lg:w-1/2 flex flex-col">
                       <div className="flex flex-wrap items-center gap-3 mb-4">
                         {/* Badge Periode */}
@@ -354,7 +391,7 @@ export default function PortfolioSection() {
                               <polyline points="15 3 21 3 21 9"></polyline>
                               <line x1="10" y1="14" x2="21" y2="3"></line>
                             </svg>
-                            Live Deploy
+                            {language === "en" ? "Live Deploy" : "Deploy Langsung"}
                           </a>
                         )}
                       </div>
@@ -374,7 +411,7 @@ export default function PortfolioSection() {
                             key={idx}
                             className="flex items-start gap-4 text-gray-300"
                           >
-                            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0 shadow-[0_0_10px_rgba(52,211,153,0.8)]"></span>
+                            <span className="mt-2 w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0"></span>
                             <span className="leading-relaxed">{highlight}</span>
                           </li>
                         ))}
@@ -388,9 +425,6 @@ export default function PortfolioSection() {
                       {/* GAMBAR 1 (Utama - Belakang Kiri Atas) */}
                       {/* Saat grup di-hover: geser ke kiri atas. Saat div ini di-hover: maju ke depan (z-50) & membesar */}
                       <div className="absolute top-0 left-0 w-[70%] h-[60%] bg-[#0a0f1c] rounded-2xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 z-10 group-hover:-translate-x-6 group-hover:-translate-y-4 group-hover:rotate-[-4deg] hover:!z-50 hover:!scale-110 cursor-pointer">
-                        <span className="text-gray-600 font-mono text-xs absolute z-0 inset-0 flex items-center justify-center">
-                          Img 1: {exp.image1}
-                        </span>
                         <img
                           src={exp.image1}
                           alt="Dokumentasi 1"
@@ -400,9 +434,6 @@ export default function PortfolioSection() {
 
                       {/* GAMBAR 2 (Dokumentasi 2 - Tengah Kanan) */}
                       <div className="absolute top-[20%] right-0 w-[65%] h-[55%] bg-[#020617] rounded-2xl overflow-hidden border-4 border-[#020617] shadow-[0_20px_50px_rgba(0,0,0,0.8)] transition-all duration-500 z-20 group-hover:translate-x-6 group-hover:rotate-[4deg] hover:!z-50 hover:!scale-110 cursor-pointer">
-                        <span className="text-gray-600 font-mono text-xs absolute z-0 inset-0 flex items-center justify-center">
-                          Img 2: {exp.image2}
-                        </span>
                         <img
                           src={exp.image2}
                           alt="Dokumentasi 2"
@@ -411,20 +442,13 @@ export default function PortfolioSection() {
                       </div>
 
                       {/* GAMBAR 3 (Sertifikat / Tambahan - Bawah Kiri) */}
-                      <div className="absolute bottom-0 left-[10%] w-[55%] h-[50%] bg-[#0f172a] rounded-2xl overflow-hidden border-4 border-cyan-900/50 shadow-[0_20px_50px_rgba(34,211,238,0.2)] transition-all duration-500 z-30 group-hover:-translate-x-2 group-hover:translate-y-6 group-hover:rotate-[-2deg] hover:!z-50 hover:!scale-110 cursor-pointer">
-                        <span className="text-gray-600 font-mono text-xs absolute z-0 inset-0 flex items-center justify-center">
-                          Img 3: {exp.image3}
-                        </span>
+                      <div className="absolute bottom-0 left-[10%] w-[55%] h-[50%] bg-[#0f172a] rounded-2xl overflow-hidden border-4 border-[#020617] shadow-2xl transition-all duration-500 z-30 group-hover:-translate-x-2 group-hover:translate-y-6 group-hover:rotate-[-2deg] hover:!z-50 hover:!scale-110 cursor-pointer">
                         <img
                           src={exp.image3}
                           alt="Dokumentasi 3"
                           className="w-full h-full object-cover opacity-95 hover:opacity-100 transition-opacity z-10 relative"
                         />
                       </div>
-
-                      {/* Ornamen Garis Neon (Opsional untuk estetika) */}
-                      <div className="absolute top-10 right-10 w-20 h-20 border-t-2 border-r-2 border-cyan-500/30 rounded-tr-3xl z-0 transition-transform duration-700 group-hover:translate-x-8 group-hover:-translate-y-8"></div>
-                      <div className="absolute bottom-10 left-0 w-20 h-20 border-b-2 border-l-2 border-emerald-500/30 rounded-bl-3xl z-0 transition-transform duration-700 group-hover:-translate-x-8 group-hover:translate-y-8"></div>
                     </div>
                   </motion.div>
                 ))}
@@ -456,9 +480,6 @@ export default function PortfolioSection() {
                     transition={{ delay: catIndex * 0.2 }}
                     className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm relative overflow-hidden group"
                   >
-                    {/* Efek Cahaya Latar di setiap Kategori */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-[80px] -z-10 group-hover:bg-cyan-500/10 transition-colors duration-700"></div>
-
                     <div className="flex items-center gap-3 mb-8 border-b border-white/10 pb-4">
                       <category.icon className={`text-2xl ${category.color}`} />
                       <h3 className="text-2xl font-bold text-white">
@@ -470,17 +491,11 @@ export default function PortfolioSection() {
                       {category.techs.map((tech, idx) => (
                         <motion.div
                           key={idx}
-                          // Animasi melayang (floating) terus-menerus secara acak
-                          animate={{ y: [0, -8, 0] }}
-                          transition={{
-                            duration: 3 + (idx % 3),
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: idx * 0.1,
-                          }}
-                          className="relative flex flex-col items-center justify-center p-4 bg-[#020617]/50 border border-white/5 rounded-xl hover:bg-white/5 hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)] transition-all duration-300 cursor-pointer group/item perspective-1000"
+                          whileHover={{ y: -4 }}
+                          transition={{ duration: 0.25 }}
+                          className="relative flex flex-col items-center justify-center p-4 bg-[#020617]/50 border border-white/5 rounded-xl hover:bg-white/5 hover:border-cyan-500/50 transition-colors duration-300 cursor-pointer group/item"
                         >
-                          <div className="text-4xl mb-3 transform transition-transform duration-500 group-hover/item:scale-125 group-hover/item:rotate-y-[15deg] group-hover/item:-translate-y-2">
+                          <div className="text-4xl mb-3 transform transition-transform duration-500 group-hover/item:scale-110">
                             <tech.icon
                               className={`${tech.color} drop-shadow-lg`}
                             />
@@ -541,15 +556,17 @@ export default function PortfolioSection() {
                     {selectedCert.title}
                   </h3>
                   <p className="text-gray-400 text-sm">
-                    Issue Date: {selectedCert.issueDate}
+                    {language === "en" ? "Issue Date" : "Tanggal Terbit"}:{" "}
+                    {selectedCert.issueDate}
                   </p>
                 </div>
 
                 <button
                   onClick={() => setSelectedCert(null)}
+                  aria-label={language === "en" ? "Close" : "Tutup"}
                   className="px-8 py-3 w-full md:w-auto bg-white/5 hover:bg-red-500/80 text-white rounded-lg transition-colors font-medium border border-white/10 whitespace-nowrap"
                 >
-                  Close
+                  {language === "en" ? "Close" : "Tutup"}
                 </button>
               </div>
             </motion.div>

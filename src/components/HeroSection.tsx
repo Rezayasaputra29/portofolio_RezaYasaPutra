@@ -1,42 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 // [+] Import ikon UI standar
-import { ArrowUpRight, Database, Cpu } from "lucide-react"; 
+import { ArrowUpRight } from "lucide-react"; 
 // [+] Import logo media sosial
 import { FaLinkedin, FaGithub, FaInstagram } from "react-icons/fa";
 // [+] Import hook bahasa
 import { useLanguage } from "../context/LanguageContext";
-
-// Komponen Kecil untuk Efek Typewriter Dwibahasa
-const Typewriter = ({ textEN, textID, language }: { textEN: string; textID: string; language: "en" | "id" }) => {
-  const text = language === "en" ? textEN : textID;
-  const [displayText, setDisplayText] = useState("");
-
-  // Reset teks saat bahasa berubah
-  useEffect(() => {
-    setDisplayText("");
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < text.length) {
-        setDisplayText((prev) => prev + text.charAt(i));
-        i++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 40); // Kecepatan ketikan
-    return () => clearInterval(timer);
-  }, [text, language]);
-
-  return (
-    <span>
-      {displayText}
-      <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }}>
-        |
-      </motion.span>
-    </span>
-  );
-};
 
 export default function HeroSection() {
   const { language } = useLanguage();
@@ -59,17 +28,15 @@ export default function HeroSection() {
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tighter leading-tight">
             Reza Yasa Putra, S.Kom <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-emerald-400 text-4xl md:text-5xl">
-              {language === "en" ? "Data Scientist & AI Engineer." : "Data Scientist & AI Engineer."}
+              {language === "en" ? "Data Analyst" : "Data Analyst "}
             </span>
           </h1>
           
-          <div className="text-gray-400 text-lg max-w-lg mb-6 min-h-[80px]">
-            <Typewriter 
-              textEN="Building Convolutional Neural Network architectures, intelligent classification systems, and designing data-driven solutions for complex problems." 
-              textID="Membangun arsitektur Convolutional Neural Network, sistem klasifikasi cerdas, dan merancang solusi berbasis data untuk berbagai masalah kompleks."
-              language={language}
-            />
-          </div>
+          <p className="text-gray-400 text-lg max-w-lg leading-relaxed mb-8">
+            {language === "en"
+              ? "Translating complex data into strategic business insights. Focused on developing interactive visualizations, data modeling, and analytical reporting to drive data-driven decisions."
+              : "Menerjemahkan data kompleks menjadi wawasan bisnis yang strategis. Berfokus pada pengembangan visualisasi interaktif, pemodelan data, dan pelaporan analitik untuk mendorong keputusan yang tepat sasaran."}
+          </p>
 
           {/* Baris Ikon Media Sosial dengan Tautan Aktif */}
           <div className="flex gap-4 mb-8">
@@ -77,7 +44,8 @@ export default function HeroSection() {
               href="https://www.linkedin.com/in/rezayasa-putra" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400 hover:text-cyan-400 text-gray-400 transition-all shadow-lg hover:shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+              aria-label="LinkedIn"
+              className="p-3 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/60 hover:text-cyan-400 text-gray-400 transition-colors"
             >
               <FaLinkedin size={22} />
             </a>
@@ -85,7 +53,8 @@ export default function HeroSection() {
               href="https://github.com/Rezayasaputra29" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400 hover:text-cyan-400 text-gray-400 transition-all shadow-lg hover:shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+              aria-label="GitHub"
+              className="p-3 rounded-full bg-white/5 border border-white/10 hover:border-cyan-400/60 hover:text-cyan-400 text-gray-400 transition-colors"
             >
               <FaGithub size={22} />
             </a>
@@ -93,14 +62,15 @@ export default function HeroSection() {
               href="https://instagram.com/rezayasa_" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="p-3 rounded-full bg-white/5 border border-white/10 hover:border-emerald-400 hover:text-emerald-400 text-gray-400 transition-all shadow-lg hover:shadow-[0_0_15px_rgba(52,211,153,0.4)]"
+              aria-label="Instagram"
+              className="p-3 rounded-full bg-white/5 border border-white/10 hover:border-emerald-400/60 hover:text-emerald-400 text-gray-400 transition-colors"
             >
               <FaInstagram size={22} />
             </a>
           </div>
 
           <div className="flex gap-4">
-            <a href="#portfolio" className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-[#020617] px-6 py-3 rounded-full font-semibold transition-all shadow-[0_0_20px_rgba(34,211,238,0.3)]">
+            <a href="#portfolio" className="flex items-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-[#020617] px-6 py-3 rounded-full font-semibold transition-colors">
               {language === "en" ? "View Projects" : "Lihat Proyek"} <ArrowUpRight size={20} />
             </a>
             <a href="#contact" className="px-6 py-3 rounded-full border border-gray-600 text-gray-300 hover:border-cyan-400 hover:text-cyan-400 transition-colors flex items-center">
@@ -119,7 +89,7 @@ export default function HeroSection() {
               rotateY: [0, -10, 0]
             }}
             transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-            className="relative z-10 w-64 h-80 rounded-2xl border border-cyan-500/30 shadow-[0_0_40px_rgba(34,211,238,0.2)] overflow-hidden group"
+            className="relative z-10 w-64 h-80 rounded-2xl border border-white/10 overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#020617]/90 z-10"></div>
             
@@ -130,27 +100,11 @@ export default function HeroSection() {
             />
 
             <div className="absolute bottom-4 w-full text-center z-20">
-              <h3 className="text-white font-bold text-lg tracking-widest">REZA YASA PUTRA</h3>
+              <h3 className="text-white font-bold text-lg tracking-tight">REZA YASA PUTRA</h3>
               <p className="text-cyan-400 text-xs font-mono mt-1">
-                {language === "en" ? "Ready For Impact_" : "Siap Berdampak_"}
+                {language === "en" ? "Ready For Impact" : "Siap Berdampak"}
               </p>
             </div>
-          </motion.div>
-
-          <motion.div
-            animate={{ y: [10, -15, 10], rotate: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
-            className="absolute top-10 right-10 z-0 p-4 bg-emerald-900/20 border border-emerald-500/20 rounded-xl hidden md:block"
-          >
-            <Database className="text-emerald-400/60 w-10 h-10" />
-          </motion.div>
-
-          <motion.div
-            animate={{ y: [-15, 10, -15], rotate: [0, -5, 0] }}
-            transition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 0.5 }}
-            className="absolute bottom-10 left-10 z-20 p-4 bg-cyan-900/20 border border-cyan-500/20 rounded-xl hidden md:block"
-          >
-            <Cpu className="text-cyan-400/60 w-10 h-10" />
           </motion.div>
         </div>
 

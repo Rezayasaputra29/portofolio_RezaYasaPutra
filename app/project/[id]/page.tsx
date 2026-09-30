@@ -3,6 +3,7 @@ import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
+  ArrowRight,
   ExternalLink,
   PlayCircle,
   FileCode2,
@@ -19,6 +20,15 @@ export default function ProjectDetail() {
 
   const project = projectsData.find((p) => p.id === Number(params.id));
 
+  // Urutan prev/next mengikuti urutan array projectsData (bukan urutan id)
+  const currentIndex = projectsData.findIndex((p) => p.id === Number(params.id));
+  const prevProject =
+    currentIndex > 0 ? projectsData[currentIndex - 1] : undefined;
+  const nextProject =
+    currentIndex >= 0 && currentIndex < projectsData.length - 1
+      ? projectsData[currentIndex + 1]
+      : undefined;
+
   if (!project)
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0A0B0F] text-white">
@@ -29,6 +39,7 @@ export default function ProjectDetail() {
   const renderDemoIcon = (type: string) => {
     if (type === "live") return <ExternalLink size={18} />;
     if (type === "video") return <PlayCircle size={18} />;
+    if (type === "excel" || type === "pdf") return <Download size={18} />;
     return <FileCode2 size={18} />;
   };
 
@@ -59,12 +70,16 @@ export default function ProjectDetail() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-5 flex flex-col"
           >
-            <h1 className="font-serif text-4xl md:text-5xl leading-[1.08] tracking-tight text-white mb-6">
+            <span className="text-[10px] uppercase tracking-widest text-[#C99A46] font-semibold mb-3 block">
+              {project.category}
+            </span>
+
+            <h1 className="text-4xl md:text-5xl leading-[1.08] tracking-tight text-white mb-6">
               {project.title[language]}
             </h1>
 
             <p className="text-[#9CA0AA] text-base md:text-lg leading-relaxed mb-8">
-              {project.solution[language]}
+              {project.shortDesc[language]}
             </p>
 
             {/* Stat cards */}
@@ -113,14 +128,16 @@ export default function ProjectDetail() {
                         ? "Download Excel"
                         : "Unduh Data Excel"
                       : project.demoType === "live"
-                        ? "Live Demo"
+                        ? language === "en"
+                          ? "Live Demo"
+                          : "Demo Langsung"
                         : language === "en"
                           ? "View Project"
                           : "Lihat Proyek"}
                 </a>
               )}
 
-              {project.datasetLink ? (
+              {project.datasetLink && (
                 <a
                   href={project.datasetLink}
                   target="_blank"
@@ -131,7 +148,9 @@ export default function ProjectDetail() {
                   <Download size={18} />
                   {language === "en" ? "Download Dataset" : "Unduh Dataset"}
                 </a>
-              ) : project.github !== "" ? (
+              )}
+
+              {project.github !== "" && (
                 <a
                   href={project.github}
                   target="_blank"
@@ -141,7 +160,7 @@ export default function ProjectDetail() {
                   <FaGithub size={18} />
                   {language === "en" ? "Code" : "Kode"}
                 </a>
-              ) : null}
+              )}
             </div>
 
             {/* Tech stack */}
@@ -196,6 +215,31 @@ export default function ProjectDetail() {
                 ))}
               </div>
             )}
+
+            {/* Problem & Solution */}
+            <div className="border border-white/10 rounded-xl p-8 mb-8">
+              <h3 className="text-lg font-medium text-white mb-6">
+                {language === "en" ? "Problem & Solution" : "Masalah & Solusi"}
+              </h3>
+              <div className="flex flex-col gap-6">
+                <div className="pl-4 border-l-2 border-white/15">
+                  <h4 className="text-xs uppercase tracking-widest text-[#6E7280] mb-2">
+                    {language === "en" ? "The Problem" : "Masalah"}
+                  </h4>
+                  <p className="text-sm text-[#9CA0AA] leading-relaxed">
+                    {project.problem[language]}
+                  </p>
+                </div>
+                <div className="pl-4 border-l-2 border-[#C99A46]/40">
+                  <h4 className="text-xs uppercase tracking-widest text-[#C99A46] mb-2">
+                    {language === "en" ? "The Solution" : "Solusi"}
+                  </h4>
+                  <p className="text-sm text-[#9CA0AA] leading-relaxed">
+                    {project.solution[language]}
+                  </p>
+                </div>
+              </div>
+            </div>
 
             {/* Key features */}
             <div className="border border-white/10 rounded-xl p-8">
@@ -257,6 +301,41 @@ export default function ProjectDetail() {
               </div>
             )}
           </motion.div>
+        </div>
+
+        {/* Prev / Next project — mengikuti urutan array */}
+        <div className="mt-16 pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {prevProject ? (
+            <Link
+              href={`/project/${prevProject.id}`}
+              className="group flex flex-col gap-1 border border-white/10 rounded-xl p-5 transition-all hover:border-[#C99A46]/40 hover:bg-white/[0.02]"
+            >
+              <span className="flex items-center gap-2 text-xs text-[#6E7280]">
+                <ArrowLeft size={13} />
+                {language === "en" ? "Previous project" : "Proyek sebelumnya"}
+              </span>
+              <span className="text-sm font-medium text-[#EDEDE7] group-hover:text-[#C99A46] transition-colors line-clamp-2">
+                {prevProject.title[language]}
+              </span>
+            </Link>
+          ) : (
+            <span />
+          )}
+
+          {nextProject && (
+            <Link
+              href={`/project/${nextProject.id}`}
+              className="group flex flex-col gap-1 border border-white/10 rounded-xl p-5 text-right transition-all hover:border-[#C99A46]/40 hover:bg-white/[0.02] sm:items-end"
+            >
+              <span className="flex items-center gap-2 text-xs text-[#6E7280]">
+                {language === "en" ? "Next project" : "Proyek berikutnya"}
+                <ArrowRight size={13} />
+              </span>
+              <span className="text-sm font-medium text-[#EDEDE7] group-hover:text-[#C99A46] transition-colors line-clamp-2">
+                {nextProject.title[language]}
+              </span>
+            </Link>
+          )}
         </div>
       </div>
     </main>
